@@ -41,8 +41,5 @@ hist(semesterly_gamers$time,
      breaks=19)
 
 #Ouestion 3
-
-
-
-
+point_estimate_average <- mean(video_data$time) #1.242857
 
