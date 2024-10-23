@@ -7,6 +7,8 @@ author: "Sophia Vo, Katelyn Zhao"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+video_data <- read.table("videodata.txt", header = TRUE, sep="")
+video_multiple <- read.table("videoMultiple.txt", header = TRUE, sep="")
 ```
 
 ## Contribution
@@ -38,6 +40,68 @@ Interval-Estimate: (27.22%, 47.51%)
 ### 2.1.3. Conclusion
 
 A point estimator is a single value $\bar{x}$. In this case, it estimates the proportion of students that played video games a week prior to the survey given a sample. An interval estimate is a range of two values, where one can estimate that the population proportion is between those two values with a fixed confidence (probability). In our case, the interval estimate is very wide, meaning it is not very useful in estimating the population proportion.
+
+## 2.2. Time Played By Frequency of Play
+
+### 2.2.1. Methods
+
+Next, we wanted to look at the if the amount of time spent playing games in the week prior to the survey compares for different reported frequencies. In the survey, students were asked to report how often they play video games on a scale from 1-4, where 1 represents playing daily, 2 represents playing weekly, 3 represents playing monthly, and 4 represents playing semesterly. To compare the amount of time spent playing games between different reported frequencies, we graphed the distributions of time spent playing games and calculated the sample proportion for each frequency.
+
+### 2.2.2. Analysis
+
+```{r, echo=FALSE, fig.width=3.5, fig.height=2.5}
+daily_gamers <- video_data[video_data$freq == 1,]
+weekly_gamers <- video_data[video_data$freq == 2,]
+monthly_gamers <- video_data[video_data$freq == 3,]
+semesterly_gamers <- video_data[video_data$freq == 4,]
+
+hist(daily_gamers$time, 
+     main = "Daily Gamers", 
+     xlab = "Hours Played",
+     breaks=20)
+hist(weekly_gamers$time, 
+     main = "Weekly Gamers", 
+     xlab = "Hours Played",
+     breaks=20)
+hist(monthly_gamers$time, 
+     main = "Monthly Gamers", 
+     xlab = "Hours Played",
+     breaks=20)
+hist(semesterly_gamers$time, 
+     main = "Semesterly Gamers", 
+     xlab = "Hours Played",
+     breaks=20)
+```
+Based on these graphs, it becomes apparent that daily and weekly gamers spent a lot more time playing games a week prior to this survey compared to monthly and semesterly gamers.  
+
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+numerical_summaries <- data.frame(
+  Sample_Proportions = c('77.78%', '85.71%', '11.11%', '4.35%')
+)
+
+rownames(numerical_summaries) <- c("Daily", "Weekly", "Monthly", "Semesterly")
+
+kable(numerical_summaries, caption = "Sample Proportions Based On Reported Frequency") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+```
+
+Similarly, the numerical summaries show that more daily and weekly gamers spent time playing games the week prior to the survey than monthly and semesterly gamers.
+
+### 2.2.3. Conclusion
+
+This survey was taken a week after a statistics exam, and the participants were students who participated in that exam. So, the fact that there was an exam in the week prior to the survey could affect the previous estimates and this comparison. Other variables in the survey like "Hate Math", "Grade Expected", or "Play if Busy" may be confounding variables that affect the results of our estimation. For example, those that respond "Yes" to the question "Hate Math" may dedicate less time to studying and more time to playing games. Similarly, those that already have high expectations for what grade they would earn on the upcoming exam might spend less time studying and more time playing games. Those that respond "Yes" to "Play if Busy" may still decide to spend time playing games despite being busy studying for the exam.
+
+## 2.3. Estimate Means of Time Spent Playing
+
+### 2.3.1. Methods
+
+### 2.3.2. Analysis
+
+### 2.3.3. Conclusion
 
 # 3. Advanced Analysis
 
