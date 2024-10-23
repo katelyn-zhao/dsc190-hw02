@@ -51,7 +51,7 @@ hist(video_data$time,
 
 #Use bootstrapping to calculate the confidence interval since the data is heavily skewed.
 n_size<- dim(video_data)[1]
-n_iterations <- 4000
+n_iterations <- 10000
 
 bootstrap_means <- numeric(n_iterations)
 
@@ -61,8 +61,8 @@ for (i in 1:n_iterations) {
   bootstrap_means[i] <- mean(bootstrap_sample)
 }
 
-lower_interval_estimate_average <- quantile(bootstrap_means, 0.025) #0.5911538 
-upper_interval_estimate_average <- quantile(bootstrap_means, 0.975) #2.101346
+lower_interval_estimate_average <- quantile(bootstrap_means, 0.025) #0.5988462  
+upper_interval_estimate_average <- quantile(bootstrap_means, 0.975) #2.11217
 
 hist(bootstrap_means, breaks = 30, col = "lightblue", main = "Bootstrap Distribution of the Mean", 
      xlab = "Mean", ylab = "Frequency")
