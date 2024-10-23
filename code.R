@@ -43,3 +43,31 @@ hist(semesterly_gamers$time,
 #Ouestion 3
 point_estimate_average <- mean(video_data$time) #1.242857
 
+#Look at the shape of the data
+hist(video_data$time,
+     main = 'Time Spent Playing Games a Week Prior to The Survey',
+     xlab = "Hours Played",
+     breaks=24)
+
+#Use bootstrapping to calculate the confidence interval since the data is heavily skewed.
+n_size<- dim(video_data)[1]
+n_iterations <- 4000
+
+bootstrap_means <- numeric(n_iterations)
+
+set.seed(123)
+for (i in 1:n_iterations) {
+  bootstrap_sample <- sample(video_data$time, size = n_size, replace = TRUE)
+  bootstrap_means[i] <- mean(bootstrap_sample)
+}
+
+lower_interval_estimate_average <- quantile(bootstrap_means, 0.025) #0.5911538 
+upper_interval_estimate_average <- quantile(bootstrap_means, 0.975) #2.101346
+
+hist(bootstrap_means, breaks = 30, col = "lightblue", main = "Bootstrap Distribution of the Mean", 
+     xlab = "Mean", ylab = "Frequency")
+abline(v = point_estimate_average, col = 'red', lty = 2, lwd = 2)
+abline(v = lower_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
+abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
+
+#Question 4
