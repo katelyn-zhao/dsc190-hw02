@@ -37,7 +37,7 @@ Interval-Estimate: (27.22%, 47.51%)
 
 ### 2.1.3. Conclusion
 
-A point estimator is a single value $\bar{x}$. In this case, it estimates the proportion of students that played video games a week prior to the survey given a sample. An interval estimate is a range of two values, where one can estimate that the population proportion is between those two values with a fixed confidence (probability).
+A point estimator is a single value $\bar{x}$. In this case, it estimates the proportion of students that played video games a week prior to the survey given a sample. An interval estimate is a range of two values, where one can estimate that the population proportion is between those two values with a fixed confidence (probability). In our case, the interval estimate is very wide, meaning it is not very useful in estimating the population proportion.
 
 # 3. Advanced Analysis
 
