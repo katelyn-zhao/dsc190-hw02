@@ -26,30 +26,30 @@ semesterly_point_estimate_fraction <- dim(semesterly_gamers[semesterly_gamers$ti
 hist(daily_gamers$time, 
      main = "Daily Gamers", 
      xlab = "Hours Played",
-     breaks=19)
+     breaks=20)
 hist(weekly_gamers$time, 
      main = "Weekly Gamers", 
      xlab = "Hours Played",
-     breaks=19)
+     breaks=20)
 hist(monthly_gamers$time, 
      main = "Monthly Gamers", 
      xlab = "Hours Played",
-     breaks=19)
+     breaks=20)
 hist(semesterly_gamers$time, 
      main = "Semesterly Gamers", 
      xlab = "Hours Played",
-     breaks=19)
+     breaks=20)
 
 #Ouestion 3
-point_estimate_average <- mean(video_data$time) #1.242857
 
 #Look at the shape of the data
 hist(video_data$time,
      main = 'Time Spent Playing Games a Week Prior to The Survey',
      xlab = "Hours Played",
-     breaks=24)
+     breaks=20)
 
 #Use bootstrapping to calculate the confidence interval since the data is heavily skewed.
+point_estimate_average <- mean(video_data$time) #1.242857
 n_size<- dim(video_data)[1]
 n_iterations <- 10000
 
@@ -66,6 +66,7 @@ upper_interval_estimate_average <- quantile(bootstrap_means, 0.975) #2.11217
 
 hist(bootstrap_means, breaks = 30, col = "lightblue", main = "Bootstrap Distribution of the Mean", 
      xlab = "Mean", ylab = "Frequency")
+curve(dnorm(x, Xbar, SE), 0, 3, col='red', lwd=2, add = T)
 abline(v = point_estimate_average, col = 'red', lty = 2, lwd = 2)
 abline(v = lower_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
