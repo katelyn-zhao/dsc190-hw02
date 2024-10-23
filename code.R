@@ -72,3 +72,7 @@ abline(v = lower_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 
 #Question 4
+
+#Question 5
+
+#Question 6
