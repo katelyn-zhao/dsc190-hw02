@@ -72,6 +72,60 @@ abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 
 #Question 4
 
+# Distribution of preferences for video games
+table(video_data$like)
+
+enjoys_videogames <- video_data[video_data$like == 2 | video_data$like == 3,]
+dislikes_videogames <- video_data[video_data$like == 4 | video_data$like == 5,]
+never_played <- video_data[video_data$like == 1,]
+
+# Proportion of students who enjoy playing
+prop_enjoy <- nrow(enjoys_videogames) / nrow(video_data)
+prop_dislike <- nrow(dislikes_videogames) / nrow(video_data)
+prop_never_played <- nrow(never_played) / nrow(video_data)
+
+# Remove non-responses (99)
+filtered_video_data <- video_data[video_data$like != 99, ]
+
+# Plot histogram of video game preferences
+hist(filtered_video_data$like, 
+     breaks = 5,  # Adjust number of bins based on categories
+     col = "blue", 
+     main = "Distribution of Video Game Preferences", 
+     xlab = "Preference (1 = Never Played, 2-3 = Enjoys, 4-5 = Dislikes)",
+     ylab = "Frequency",
+     xaxt = "n")  # Remove the default x-axis labels
+axis(1, at = 1:5, labels = c("Never Played", "Enjoy (2)", "Enjoy (3)", "Dislike (4)", "Dislike (5)"))
+
+# Reasons for liking video games 
+reasons_liking <- colSums(video_multiple[, c("graphic", "relax", "coord", 
+                                             "challenge", "master", "bored")], na.rm = TRUE)
+# Reasons for disliking video games 
+reasons_disliking <- colSums(video_multiple[, c("time", "frust", "lonely", "rules", "cost", "boring", "friends", "point")], na.rm = TRUE)
+
+
+# Save the most common reasons for liking/disliking video games
+reasons_for_likeliness <- list(
+  "Reasons for Liking" = names(sort(reasons_liking, decreasing = TRUE)[1:4]),
+  "Reasons for Disliking" = names(sort(reasons_disliking, decreasing = TRUE)[1:4])
+)
+
+# Barplot for reasons for liking video games
+barplot(reasons_liking, 
+        main = "Reasons for Liking Video Games", 
+        col = "green", 
+        xlab = "Reason", 
+        ylab = "Count", 
+        las = 2) 
+
+# Barplot for reasons for disliking video games
+barplot(reasons_disliking, 
+        main = "Reasons for Disliking Video Games", 
+        col = "red", 
+        xlab = "Reason", 
+        ylab = "Count", 
+        las = 2)
+
 #Question 5
 
 #Question 6
