@@ -30,7 +30,7 @@ The report is structured as follows: Section 1 addresses each of the research qu
 
 The first step of our analysis was to estimate the proportion of students who played a video in the week prior to the survey. We found both a point estimate and an interval estimate for this proportion.
 
-The point estimate represents a single estimated value of the proportion of students who played video games based on the sample. The sample proportion \( \hat{p} \) is calculated as the ratio of students who played video games (i.e., reported playing for more than 0 hours) to the total number of students surveyed.
+The point estimate represents a single estimated value of the proportion of students who played video games based on the sample. The sample proportion \( \bar{X} \) is calculated as the ratio of students who played video games (i.e., reported playing for more than 0 hours) to the total number of students surveyed.
    
    The formula for the sample proportion is given by:
    \[
