@@ -43,19 +43,17 @@ The interval estimate provides a range that is likely to contain the true propor
 
    The confidence interval is calculated as:
    \[
-   (\bar{X} - 2 \frac{\sigma}{\sqrt{n}}, \bar{X} + 2 \frac{\sigma}{\sqrt{n}})
+   (\bar{X} - 2 \frac{s}{\sqrt{n}}, \bar{X} + 2 \frac{s}{\sqrt{n}})
    \]
-   where \(\frac{\sigma}{\sqrt{n}} \) is the standard error.
+   where \(\frac{s}{\sqrt{n}} \) is the standard error; \(s \) is the sample standard deviation.
 
 ### 2.1.2. Analysis
 
 To find the point estimate, we found the sample proportion by counting the number of students whose playing time a week prior to the survey was greater than zero and the total number of responses to the survey. The proportion of students who played video games in the week prior to the survey is approximately 37.36%. While the point estimate gives a specific value, it does not account for the inherent variability that comes with sampling. To take this uncertainty into account, we calculated a 95% confidence interval. The 95% confidence interval for the proportion of students who played video games is between 27.22% and 47.51%.
 
-The point estimate provides a single value representing the proportion of students who played video games, while the confidence interval provides a range that accounts for uncertainty due to sampling. The interval is based on the assumption that our sample is representative of the entire population of students who took the survey. The confidence interval ensures that if the survey were repeated multiple times, 95% of the intervals calculated in this manner would contain the true population proportion.
-
 ### 2.1.3. Conclusion
 
-A point estimator is a single value $\bar{x}$, useful for summarizing the central tendency. In this case, it estimates the proportion of students that played video games a week prior to the survey given a sample. An interval estimate is a range of two values, where one can estimate that the population proportion is between those two values with a fixed confidence (probability), reflecting the variability in the sample data. In our case, the interval estimate is very wide, reducing its usefulness in estimating the population proportion, since the true proportion could plausibly fall anywhere between 27% and 47%.
+A point estimator is a single value $\bar{x}$, useful for summarizing the central tendency. In this case, it estimates the proportion of students that played video games a week prior to the survey given a sample. An interval estimate is a range of two values, where one can estimate that the population proportion is between those two values with a fixed confidence (probability), reflecting the variability in the sample data. The interval is based on the assumption that our sample is representative of the entire population of students who took the survey. The confidence interval ensures that if the survey were repeated multiple times, 95% of the intervals calculated in this manner would contain the true population proportion. In our case, the interval estimate is very wide, reducing its usefulness in estimating the population proportion, since the true proportion could plausibly fall anywhere between 27% and 47%.
 
 ## 2.2. Comparison of Time Spent and Reported Frequency of Playing Video Games
 
