@@ -112,7 +112,7 @@ This survey was taken a week after a statistics exam, and the participants were 
 
 ## 2.3 Point and Interval Estimate for Average Time Spent Playing Video Games
 
-### Methods
+### 2.3.1 Methods
 
 To estimate the average time spent playing video games during the week prior to the survey, we will calculate both a point estimate and a 95% confidence interval for the mean.
 
@@ -126,7 +126,7 @@ We explored the shape of the data using a histogram to visualize the distributio
 
 The procedure for bootstrapping involved resampling the data (with replacement) 10,000 times and calculating the mean for each resample. This allowed us to generate a distribution of means and compute the point estimate (the sample mean) and the 95% confidence interval using the 2.5th and 97.5th percentiles of the bootstrap distribution.
 
-### Analysis
+### 2.3.2 Analysis
 
 The point estimate for the average amount of time spent playing video games is 1.24 hours. To account for the right-skewed distribution, we generated a 95% confidence interval through bootstrapping. The resulting interval ranges from 0.60 hours to 2.11 hours.
 
@@ -164,19 +164,13 @@ abline(v = lower_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 ```
 
-### Conclusions
+### 2.3.3 Conclusions
 
 The average amount of time students spent playing video games in the week prior to the survey is estimated to be 1.24 hours. The 95% confidence interval suggests that, on average, students spent between 0.60 and 2.11 hours playing video games during that week. This interval accounts for the skewed nature of the data and provides a more robust estimate than taking two standard errors away from the mean, due to the non-normality of the distribution.
 
 The simulation study supports the validity of boostrapping to determine the interval estimate, as the bootstrap distribution of the mean follows a roughly normal shape, proving to be an effective way to estimate the average time spent on video games in this dataset.
 
 To conclude, we estimate that students who played video games spent an average of about 1.24 hours playing games in the week prior to the survey, with the true mean likely falling between 1.48 and 2.46 hours.
-
-### 2.3.1. Methods
-
-### 2.3.2. Analysis
-
-### 2.3.3. Conclusion
 
 # 3. Advanced Analysis
 
