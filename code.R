@@ -129,3 +129,74 @@ barplot(reasons_disliking,
 #Question 5
 
 #Question 6
+
+#Advanced Analysis
+
+#Hates math vs. Doesn't Hate Math Permutation Test
+hates_math <- video_data[video_data$math == 1,] #29
+likes_math <- video_data[video_data$math == 0,] #61
+
+hist(hates_math$time,
+     main='Hates Math',
+     xlab = 'Hours Played',
+     breaks=10)
+hist(likes_math$time,
+     main='Likes Math',
+     xlab='Hours Played',
+     breaks=10)
+
+hates_math_mean = mean(hates_math$time) #1.172414
+likes_math_mean = mean(likes_math$time) #1.296721
+
+math_observed_difference <- hates_math_mean - likes_math_mean
+
+n_permutations <- 10000  # Number of permutations
+math_perm_diffs <- numeric(n_permutations)
+
+for (i in 1:n_permutations) {
+  shuffled_labels <- sample(video_data$math)  # Shuffle Hate_Math labels
+  perm_diff <- mean(video_data$time[shuffled_labels == 1]) - mean(video_data$time[shuffled_labels == 0])
+  math_perm_diffs[i] <- perm_diff
+}
+
+math_p_value <- mean(math_perm_diffs >= math_observed_difference) #0.4905
+
+hist(math_perm_diffs, breaks = 30, main = "Permutation Distribution of Mean Differences", 
+     xlab = "Difference in Means", col = "lightblue")
+abline(v = math_observed_difference, col = "red", lwd = 2, lty = 2)
+
+#Play If Busy Permutation Test
+play_if_busy <- video_data[video_data$busy == 1,] #17
+no_play_if_busy <- video_data[video_data$busy == 0,] #63
+
+hist(play_if_busy$time,
+     main='Plays if Busy',
+     xlab = 'Hours Played',
+     breaks=10)
+hist(no_play_if_busy$time,
+     main="Doesn't Play if Busy",
+     xlab='Hours Played',
+     breaks=10)
+
+play_if_busy_mean <- mean(play_if_busy$time) #4.705882
+no_play_if_busy_mean <- mean(no_play_if_busy$time) #0.5095238
+
+busy_observed_difference <- play_if_busy_mean - no_play_if_busy_mean
+
+n_permutations <- 10000  # Number of permutations
+busy_perm_diffs <- numeric(n_permutations)
+
+for (i in 1:n_permutations) {
+  shuffled_labels <- sample(video_data$busy)  # Shuffle Play_if_busy labels
+  perm_diff <- mean(video_data$time[shuffled_labels == 1]) - mean(video_data$time[shuffled_labels == 0])
+  busy_perm_diffs[i] <- perm_diff
+}
+
+busy_p_value <- mean(busy_perm_diffs >= busy_observed_difference) #0
+
+hist(busy_perm_diffs, breaks = 30, main = "Permutation Distribution of Mean Differences", 
+     xlab = "Difference in Means", col = "lightblue")
+abline(v = busy_observed_difference, col = "red", lwd = 2, lty = 2)
+
+print(play_if_busy_mean)
+print(no_play_if_busy_mean)

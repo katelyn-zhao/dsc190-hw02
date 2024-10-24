@@ -25,9 +25,9 @@ The report is structured as follows: Section 1 addresses each of the research qu
 
 # 2. Analysis
 
-## 2.1. Estimate Proportions of Students Who Played a Video Game
+## 2.1 Estimate Proportions of Students Who Played a Video Game
 
-### 2.1.1. Methods
+### 2.1.1 Methods
 
 The first step of our analysis was to estimate the proportion of students who played a video in the week prior to the survey. We found both a point estimate and an interval estimate for this proportion.
 
@@ -47,21 +47,21 @@ The interval estimate provides a range that is likely to contain the true propor
    \]
    where \(\frac{s}{\sqrt{n}} \) is the standard error; \(s \) is the sample standard deviation.
 
-### 2.1.2. Analysis
+### 2.1.2 Analysis
 
 To find the point estimate, we found the sample proportion by counting the number of students whose playing time a week prior to the survey was greater than zero and the total number of responses to the survey. The proportion of students who played video games in the week prior to the survey is approximately 37.36%. While the point estimate gives a specific value, it does not account for the inherent variability that comes with sampling. To take this uncertainty into account, we calculated a 95% confidence interval. The 95% confidence interval for the proportion of students who played video games is between 27.22% and 47.51%.
 
-### 2.1.3. Conclusion
+### 2.1.3 Conclusion
 
 A point estimator is a single value $\bar{x}$, useful for summarizing the central tendency. In this case, it estimates the proportion of students that played video games a week prior to the survey given a sample. An interval estimate is a range of two values, where one can estimate that the population proportion is between those two values with a fixed confidence (probability), reflecting the variability in the sample data. The interval is based on the assumption that our sample is representative of the entire population of students who took the survey. The confidence interval ensures that if the survey were repeated multiple times, 95% of the intervals calculated in this manner would contain the true population proportion. In our case, the interval estimate is very wide, reducing its usefulness in estimating the population proportion, since the true proportion could plausibly fall anywhere between 27% and 47%.
 
-## 2.2. Comparison of Time Spent and Reported Frequency of Playing Video Games
+## 2.2 Comparison of Time Spent and Reported Frequency of Playing Video Games
 
-### 2.2.1. Methods
+### 2.2.1 Methods
 
 Next, we wanted to look at the if the amount of time spent playing games in the week prior to the survey compares for different reported frequencies. In the survey, students were asked to report how often they play video games on a scale from 1-4, where 1 represents playing daily, 2 represents playing weekly, 3 represents playing monthly, and 4 represents playing semesterly. To compare the amount of time spent playing games between different reported frequencies, we graphed the distributions of time spent playing games and calculated the proportion of students who reported playing video games in each frequency category and the average time they spent playing. This comparison helped us assess whether students' reported gaming habits align with the actual hours they spent playing video games. We considered the potential impact of an exam held the week before the survey, which may have influenced the amount of time students spent playing video games that week.
 
-### 2.2.2. Analysis
+### 2.2.2 Analysis
 
 ```{r, echo=FALSE, fig.width=3.5, fig.height=2.5}
 daily_gamers <- video_data[video_data$freq == 1,]
@@ -108,7 +108,7 @@ kable(numerical_summaries, caption = "Sample Proportions Based On Reported Frequ
 
 Similarly, the numerical summaries show that more daily and weekly gamers spent time playing games the week prior to the survey than monthly and semesterly gamers.
 
-### 2.2.3. Conclusion
+### 2.2.3 Conclusion
 
 This survey was taken a week after a statistics exam, and the participants were students who participated in that exam. The fact that there was an exam in the week prior to the survey could possibly affect the previous estimates and this comparison. Students who reported playing daily or weekly generally followed through with significant gaming time during the week prior to the survey, seen by their higher point estimates and the shape of their time distributions. This suggests a strong alignment between reported gaming habits and actual behavior for these groups. On the otherhand, the majority of students who reported playing monthly or semesterly did not play video games during the week prior to the survey. Their self-reported frequency of playing (monthly or semesterly) may correctly reflect their long-term habits, however the timing of the survey (after the exam) may have influenced their decision not to play games during that specific week, which could explain the low percentages of gameplay in those groups. This could also explain why the overall proportion of students who played games in the past week was  lower than expected. Other variables in the survey like "Hate Math", "Grade Expected", or "Play if Busy" may be confounding variables that affect the results of our estimation. For example, those that respond "Yes" to the question "Hate Math" may dedicate less time to studying and more time to playing games. Similarly, those that already have high expectations for what grade they would earn on the upcoming exam might spend less time studying and more time playing games. Those that respond "Yes" to "Play if Busy" may still decide to spend time playing games despite being busy studying for the exam.
 
@@ -291,6 +291,115 @@ It is noted that students who have never played video games or expressed strong 
 Overall, students generally enjoy playing video games, with relaxation being the most common reason for liking them and time commitment being the most common reason for disliking them.
 
 # 3. Advanced Analysis
+
+## 3.1 Methods
+
+We mentioned two variables "Hate Math" and "Play if Busy" that may affect the results of the estimation of the average amount of time spent playing video games in the week prior to the survey. Now, we want to further explore these variables by comparing the average amount of time spent playing video games in the week prior to the survey between students who reported hating math and those who reported that they did not hate math as well as the mean hours between students that reported playing video games even when they are busy and those who do not. To do this, we conducted two permutation tests to find out if there exists a statistically significant difference in the means between the groups.
+
+First, we visualized the distributions of time spent playing video games of each group and calculated the average time spent playing games within each group (represented by the red dotted line).
+
+```{r, echo=FALSE, fig.width=3.5, fig.height=2.5}
+hates_math <- video_data[video_data$math == 1,] #29
+likes_math <- video_data[video_data$math == 0,] #61
+play_if_busy <- video_data[video_data$busy == 1,] #17
+no_play_if_busy <- video_data[video_data$busy == 0,] #63
+
+hates_math_mean = mean(hates_math$time) #1.172414
+likes_math_mean = mean(likes_math$time) #1.296721
+
+play_if_busy_mean <- mean(play_if_busy$time) #4.705882
+no_play_if_busy_mean <- mean(no_play_if_busy$time) #0.5095238
+
+hist(hates_math$time,
+     main='Hates Math',
+     xlab = 'Hours Played',
+     breaks=10)
+abline(v = hates_math_mean, col = "red", lwd = 2, lty = 2)
+hist(likes_math$time,
+     main='Likes Math',
+     xlab='Hours Played',
+     breaks=10)
+abline(v = likes_math_mean, col = "red", lwd = 2, lty = 2)
+hist(play_if_busy$time,
+     main='Plays if Busy',
+     xlab = 'Hours Played',
+     breaks=10)
+abline(v = play_if_busy_mean, col = "red", lwd = 2, lty = 2)
+hist(no_play_if_busy$time,
+     main="Doesn't Play if Busy",
+     xlab='Hours Played',
+     breaks=10)
+abline(v = no_play_if_busy_mean, col = "red", lwd = 2, lty = 2)
+```
+
+## 3.2 Analysis
+
+### Hypotheses
+
+- **Null Hypothesis (H0):** There is no difference in the average number of hours played between students who hate math and those who do not. Any observed difference is due to random chance.
+
+- **Alternative Hypothesis (H1):** There is a significant difference in the average number of hours played between students who hate math and those who do not.
+
+- **Test Statistic**: Difference of means
+- **Significance Level**: 0.0001
+- **p-value**: The p-value for the t-test was **0.4905**, which is far above the 0.0001 significance level, which means we fail to reject the null hypothesis.
+
+The results of the permutation test between students who reported hating math and students who reported not hating math is shown below. The dotted red line represents the observed difference between the average amount of time spent playing video games for students who reported hating math and students who reported not hating math.
+
+```{r, echo=FALSE}
+math_observed_difference <- hates_math_mean - likes_math_mean
+
+n_permutations <- 10000  # Number of permutations
+math_perm_diffs <- numeric(n_permutations)
+
+for (i in 1:n_permutations) {
+  shuffled_labels <- sample(video_data$math)  # Shuffle Hate_Math labels
+  perm_diff <- mean(video_data$time[shuffled_labels == 1]) - mean(video_data$time[shuffled_labels == 0])
+  math_perm_diffs[i] <- perm_diff
+}
+
+math_p_value <- mean(math_perm_diffs >= math_observed_difference) #0.4905
+
+hist(math_perm_diffs, breaks = 30, main = "Permutation Distribution of Mean Differences", 
+     xlab = "Difference in Means", col = "lightblue")
+abline(v = math_observed_difference, col = "red", lwd = 2, lty = 2)
+```
+
+
+### Hypotheses
+
+- **Null Hypothesis (H0):** There is no difference in the average number of hours played between students who play video games when busy and those who do not. Any observed difference is due to random chance.
+
+- **Alternative Hypothesis (H1):** There is a significant difference in the average number of hours played between students who play video games when busy and those who do not.
+
+- **Test Statistic**: Difference of means
+- **Significance Level**: 0.0001
+- **p-value**: The p-value for the t-test was **0**, which is below the 0.0001 significance level, which means we reject the null hypothesis.
+
+The results of the permutation test between students who reported hating math and students who reported not hating math is shown below. The dotted red line represents the observed difference between the average amount of time spent playing video games for students who play video games even when they are busy and students who do not.
+
+```{r, echo=FALSE}
+busy_observed_difference <- play_if_busy_mean - no_play_if_busy_mean
+
+n_permutations <- 10000  # Number of permutations
+busy_perm_diffs <- numeric(n_permutations)
+
+for (i in 1:n_permutations) {
+  shuffled_labels <- sample(video_data$busy)  # Shuffle Play_if_busy labels
+  perm_diff <- mean(video_data$time[shuffled_labels == 1]) - mean(video_data$time[shuffled_labels == 0])
+  busy_perm_diffs[i] <- perm_diff
+}
+
+busy_p_value <- mean(busy_perm_diffs >= busy_observed_difference) #0
+
+hist(busy_perm_diffs, breaks = 30, main = "Permutation Distribution of Mean Differences", 
+     xlab = "Difference in Means", col = "lightblue")
+abline(v = busy_observed_difference, col = "red", lwd = 2, lty = 2)
+```
+
+## 3.3 Conclusion
+
+In conclusion, the results of the first permutation test suggest that there is no statistically significant difference in the average hours played between students who hate math and those who do not. However, the results of the second permutation test indicate that students who play video games when they are busy tend to play significantly more hours in a week compared to students who do not play when busy, which aligns with our inference that "Play If Busy" could be a confounding variable that affects the proportion and mean estimations from Sections 2.1 and 2.2.
 
 # 4. Discussion
 
