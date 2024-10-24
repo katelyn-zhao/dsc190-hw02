@@ -66,7 +66,6 @@ upper_interval_estimate_average <- quantile(bootstrap_means, 0.975) #2.11217
 
 hist(bootstrap_means, breaks = 30, col = "lightblue", main = "Bootstrap Distribution of the Mean", 
      xlab = "Mean", ylab = "Frequency")
-curve(dnorm(x, Xbar, SE), 0, 3, col='red', lwd=2, add = T)
 abline(v = point_estimate_average, col = 'red', lty = 2, lwd = 2)
 abline(v = lower_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
