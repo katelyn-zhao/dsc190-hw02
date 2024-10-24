@@ -95,7 +95,7 @@ library(knitr)
 library(kableExtra)
 
 numerical_summaries <- data.frame(
-  Sample_Proportions = c('77.78%', '85.71%', '11.11%', '4.35%')
+  Proportions = c('77.78%', '85.71%', '11.11%', '4.35%')
 )
 
 rownames(numerical_summaries) <- c("Daily", "Weekly", "Monthly", "Semesterly")
@@ -110,7 +110,67 @@ Similarly, the numerical summaries show that more daily and weekly gamers spent 
 
 This survey was taken a week after a statistics exam, and the participants were students who participated in that exam. The fact that there was an exam in the week prior to the survey could possibly affect the previous estimates and this comparison. Students who reported playing daily or weekly generally followed through with significant gaming time during the week prior to the survey, seen by their higher point estimates and the shape of their time distributions. This suggests a strong alignment between reported gaming habits and actual behavior for these groups. On the otherhand, the majority of students who reported playing monthly or semesterly did not play video games during the week prior to the survey. Their self-reported frequency of playing (monthly or semesterly) may correctly reflect their long-term habits, however the timing of the survey (after the exam) may have influenced their decision not to play games during that specific week, which could explain the low percentages of gameplay in those groups. This could also explain why the overall proportion of students who played games in the past week was  lower than expected. Other variables in the survey like "Hate Math", "Grade Expected", or "Play if Busy" may be confounding variables that affect the results of our estimation. For example, those that respond "Yes" to the question "Hate Math" may dedicate less time to studying and more time to playing games. Similarly, those that already have high expectations for what grade they would earn on the upcoming exam might spend less time studying and more time playing games. Those that respond "Yes" to "Play if Busy" may still decide to spend time playing games despite being busy studying for the exam.
 
-## 2.3. Estimate Means of Time Spent Playing
+## 2.3 Point and Interval Estimate for Average Time Spent Playing Video Games
+
+### Methods
+
+To estimate the average time spent playing video games during the week prior to the survey, we will calculate both a point estimate and a 95% confidence interval for the mean.
+
+The point estimate for the average time is the sample mean of the time spent playing video games, excluding those who reported zero hours of gameplay. The formula for the sample mean \( \bar{X} \) is:
+   \[
+   \bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i
+   \]
+   where \( X_i \) is the number of hours played by the \( i \)th student and \( n \) is the total number of students in the sample.
+
+We explored the shape of the data using a histogram to visualize the distribution of the reported time spent. Given that the data appeared heavily skewed, we chose to use bootstrapping, a resampling method, to estimate a 95% confidence interval for the mean. Since the sample distribution is not normal, bootstrapping is useful becuase it does not require the assumption of normality.
+
+The procedure for bootstrapping involved resampling the data (with replacement) 10,000 times and calculating the mean for each resample. This allowed us to generate a distribution of means and compute the point estimate (the sample mean) and the 95% confidence interval using the 2.5th and 97.5th percentiles of the bootstrap distribution.
+
+### Analysis
+
+The point estimate for the average amount of time spent playing video games is 1.24 hours. To account for the right-skewed distribution, we generated a 95% confidence interval through bootstrapping. The resulting interval ranges from 0.60 hours to 2.11 hours.
+
+The histogram of the bootstrap distribution, shown below, shows an approximately normal sampling distribution of the mean, despite the skewness of the original data due to the large sampling size (CLT), suggesting the bootstrap method was appropriate for generating the interval estimate. The red dashed line in the histogram represents the point estimate, while the blue dashed lines represent the boundaries of the 95% confidence interval.
+
+```{r, echo=FALSE}
+
+#Look at the shape of the data
+hist(video_data$time,
+     main = 'Time Spent Playing Games a Week Prior to The Survey',
+     xlab = "Hours Played",
+     breaks=20)
+
+#Use bootstrapping to calculate the confidence interval since the data is heavily skewed.
+point_estimate_average <- mean(video_data$time) #1.242857
+n_size<- dim(video_data)[1]
+n_iterations <- 10000
+
+bootstrap_means <- numeric(n_iterations)
+
+set.seed(123)
+for (i in 1:n_iterations) {
+  bootstrap_sample <- sample(video_data$time, size = n_size, replace = TRUE)
+  bootstrap_means[i] <- mean(bootstrap_sample)
+}
+
+lower_interval_estimate_average <- quantile(bootstrap_means, 0.025) #0.5988462  
+upper_interval_estimate_average <- quantile(bootstrap_means, 0.975) #2.11217
+
+hist(bootstrap_means, breaks = 30, col = "lightblue", main = "Bootstrap Distribution of the Mean", 
+     xlab = "Mean", ylab = "Frequency")
+
+abline(v = point_estimate_average, col = 'red', lty = 2, lwd = 2)
+abline(v = lower_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
+abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
+```
+
+### Conclusions
+
+The average amount of time students spent playing video games in the week prior to the survey is estimated to be 1.24 hours. The 95% confidence interval suggests that, on average, students spent between 0.60 and 2.11 hours playing video games during that week. This interval accounts for the skewed nature of the data and provides a more robust estimate than taking two standard errors away from the mean, due to the non-normality of the distribution.
+
+The simulation study supports the validity of boostrapping to determine the interval estimate, as the bootstrap distribution of the mean follows a roughly normal shape, proving to be an effective way to estimate the average time spent on video games in this dataset.
+
+To conclude, we estimate that students who played video games spent an average of about 1.24 hours playing games in the week prior to the survey, with the true mean likely falling between 1.48 and 2.46 hours.
 
 ### 2.3.1. Methods
 
