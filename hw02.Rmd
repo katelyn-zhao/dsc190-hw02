@@ -2,7 +2,6 @@
 title: "Statistical Analysis"
 output: pdf_document
 date: "2024-10-21"
-author: "Sophia Vo, Katelyn Zhao"
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +24,7 @@ The report is structured as follows: Section 1 addresses each of the research qu
 
 # 2. Analysis
 
-## 2.1. Estimate Proportions
+## 2.1. Estimate Proportions of Students Who Played a Video Game
 
 ### 2.1.1. Methods
 
@@ -57,11 +56,11 @@ The point estimate provides a single value representing the proportion of studen
 
 A point estimator is a single value $\bar{x}$, useful for summarizing the central tendency. In this case, it estimates the proportion of students that played video games a week prior to the survey given a sample. An interval estimate is a range of two values, where one can estimate that the population proportion is between those two values with a fixed confidence (probability), reflecting the variability in the sample data. In our case, the interval estimate is very wide, reducing its usefulness in estimating the population proportion, since the true proportion could plausibly fall anywhere between 27% and 47%.
 
-## 2.2. Time Played By Frequency of Play
+## 2.2. Comparison of Time Spent and Reported Frequency of Playing Video Games
 
 ### 2.2.1. Methods
 
-Next, we wanted to look at the if the amount of time spent playing games in the week prior to the survey compares for different reported frequencies. In the survey, students were asked to report how often they play video games on a scale from 1-4, where 1 represents playing daily, 2 represents playing weekly, 3 represents playing monthly, and 4 represents playing semesterly. To compare the amount of time spent playing games between different reported frequencies, we graphed the distributions of time spent playing games and calculated the sample proportion for each frequency.
+Next, we wanted to look at the if the amount of time spent playing games in the week prior to the survey compares for different reported frequencies. In the survey, students were asked to report how often they play video games on a scale from 1-4, where 1 represents playing daily, 2 represents playing weekly, 3 represents playing monthly, and 4 represents playing semesterly. To compare the amount of time spent playing games between different reported frequencies, we graphed the distributions of time spent playing games and calculated the proportion of students who reported playing video games in each frequency category and the average time they spent playing. This comparison helped us assess whether students' reported gaming habits align with the actual hours they spent playing video games. We considered the potential impact of an exam held the week before the survey, which may have influenced the amount of time students spent playing video games that week.
 
 ### 2.2.2. Analysis
 
@@ -109,7 +108,7 @@ Similarly, the numerical summaries show that more daily and weekly gamers spent 
 
 ### 2.2.3. Conclusion
 
-This survey was taken a week after a statistics exam, and the participants were students who participated in that exam. So, the fact that there was an exam in the week prior to the survey could affect the previous estimates and this comparison. Other variables in the survey like "Hate Math", "Grade Expected", or "Play if Busy" may be confounding variables that affect the results of our estimation. For example, those that respond "Yes" to the question "Hate Math" may dedicate less time to studying and more time to playing games. Similarly, those that already have high expectations for what grade they would earn on the upcoming exam might spend less time studying and more time playing games. Those that respond "Yes" to "Play if Busy" may still decide to spend time playing games despite being busy studying for the exam.
+This survey was taken a week after a statistics exam, and the participants were students who participated in that exam. The fact that there was an exam in the week prior to the survey could possibly affect the previous estimates and this comparison. Students who reported playing daily or weekly generally followed through with significant gaming time during the week prior to the survey, seen by their higher point estimates and the shape of their time distributions. This suggests a strong alignment between reported gaming habits and actual behavior for these groups. On the otherhand, the majority of students who reported playing monthly or semesterly did not play video games during the week prior to the survey. Their self-reported frequency of playing (monthly or semesterly) may correctly reflect their long-term habits, however the timing of the survey (after the exam) may have influenced their decision not to play games during that specific week, which could explain the low percentages of gameplay in those groups. This could also explain why the overall proportion of students who played games in the past week was  lower than expected. Other variables in the survey like "Hate Math", "Grade Expected", or "Play if Busy" may be confounding variables that affect the results of our estimation. For example, those that respond "Yes" to the question "Hate Math" may dedicate less time to studying and more time to playing games. Similarly, those that already have high expectations for what grade they would earn on the upcoming exam might spend less time studying and more time playing games. Those that respond "Yes" to "Play if Busy" may still decide to spend time playing games despite being busy studying for the exam.
 
 ## 2.3. Estimate Means of Time Spent Playing
 
