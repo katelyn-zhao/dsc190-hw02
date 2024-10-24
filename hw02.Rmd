@@ -172,6 +172,122 @@ The simulation study supports the validity of boostrapping to determine the inte
 
 To conclude, we estimate that students who played video games spent an average of about 1.24 hours playing games in the week prior to the survey, with the true mean likely falling between 1.48 and 2.46 hours.
 
+## 2.4 Attitude Toward Video Games
+
+### 2.4.1 Methods
+
+To analyze the students' attitudes towards video games, we will focus on the responses to the questions assessing how much students like playing video games, the reasons for playing, and the reasons for disliking them.
+
+The variable **play** in the dataset categorizes students' preferences for video games as follows: 1 = never played, 2 = very much, 3 = somewhat, 4 = not really, and 5 = not at all.
+
+We will assess whether students generally enjoy playing video games by analyzing the distribution of responses. We will examine the reasons why students like or dislike video games by focusing on the most frequently mentioned reasons.
+
+Since some students were asked to skip certain questions (e.g., those who never played video games), we will account for nonresponses when interpreting the results. This includes the proportion of nonrespondents for questions such as whether video games are educational and where they play.
+
+We will create two lists based on the most frequently selected responses for reasons why students like or dislike video games: Reasons for Liking Video Games; Reasons for Disliking Video Games.
+
+### 2.4.2 Analysis
+
+The distribution of students' preferences for video games using the **play** variable is shown below.
+
+```{r, echo=FALSE}
+filtered_video_data <- video_data[video_data$like != 99, ]
+
+# Plot a histogram of video game preferences
+hist(filtered_video_data$like, 
+     breaks = 5,  # Adjust number of bins based on categories
+     col = "lightblue", 
+     main = "Distribution of Video Game Preferences", 
+     xlab = "Preference (1 = Never Played, 2-3 = Enjoys, 4-5 = Dislikes)",
+     ylab = "Frequency",
+     xaxt = "n")  # Remove the default x-axis labels
+
+# Add custom labels to the x-axis to make it meaningful
+axis(1, at = 1:5, labels = c("Never Played", "Enjoy (2)", "Enjoy (3)", "Dislike (4)", "Dislike (5)"))
+```
+
+About 75.82% of students reported that they enjoy video games (combining responses for "like" values 2 and 3). 21.98% of students reported that they dislike video games (responses for "like" values 4 and 5). Only 1.10% of students reported that they have never played video games.
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+# Create the data frame for proportions
+proportions_data <- data.frame(
+  Proportion = c('75.82%', '21.98%', '1.10%')
+)
+
+# Set the row names
+rownames(proportions_data) <- c("Enjoys Video Games", "Dislikes Video Games", "Never Played Video Games")
+
+# Use kable to create the table with styling
+kable(proportions_data, caption = "Proportion of Students' Preferences for Video Games") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+```
+
+Next, we examined the most common reasons for liking or disliking video games from the second part of the survey.
+
+```{r, echo=FALSE}
+
+reasons_liking <- colSums(video_multiple[, c("graphic", "relax", "coord", 
+                                             "challenge", "master", "bored")], na.rm = TRUE)
+
+reasons_disliking <- colSums(video_multiple[, c("time", "frust", "lonely", "rules", "cost", "boring", "friends", "point")], na.rm = TRUE)
+
+
+reasons_for_likeliness <- list(
+  "Reasons for Liking" = names(sort(reasons_liking, decreasing = TRUE)[1:4]),
+  "Reasons for Disliking" = names(sort(reasons_disliking, decreasing = TRUE)[1:4])
+)
+
+barplot(reasons_liking, 
+        main = "Reasons for Liking Video Games", 
+        col = "lightgreen", 
+        xlab = "Reason", 
+        ylab = "Count", 
+        las = 2)  # Rotate x-axis labels for readability
+
+barplot(reasons_disliking, 
+        main = "Reasons for Disliking Video Games", 
+        col = "salmon", 
+        xlab = "Reason", 
+        ylab = "Count", 
+        las = 2)  # Rotate x-axis labels for readability
+```
+
+
+#### Reasons for Liking Video Games (most frequently selected):
+1. Relaxation
+2. Feeling of Mastery
+3. Bored
+4. Graphics/Realism
+
+#### Reasons for Disliking Video Games:
+1. Too much time
+2. Costs too much
+3. It is pointless
+4. Frustrating
+
+### 2.4.3 Conclusion
+
+Based on the analysis of the attitude questions, we find that a majority of students enjoy playing video games to some extent. Approximately 76% of students reported liking video games either very much or somewhat, while about 22% of students reported disliking them or not playing at all. This suggests that video games are generally popular among students, with a significant majority finding enjoyment in them.
+
+#### The most common reasons students provided for liking video games include:
+1. Relaxation - The highest count of students cited relaxation as a reason for liking video games.
+2. Feeling of Mastery - Many students enjoy the sense of accomplishment and mastery over the challenges in video games.
+3. Bored - Some students use video games as a way to relieve boredom.
+4. Graphics/Realism - The quality of graphics and visual appeal was also a common reason for liking video games.
+
+#### The most frequent responses for disliking video games are:
+1. Too much time - The most common reason for disliking video games was the amount of time they consume.
+2. Costs too much - The expense of gaming was a significant deterrent.
+3. It is pointless -  Some students view video games as having no real purpose or point.
+4. Frustrating - Certain students found video games frustrating, which reduced their enjoyment.
+
+It is noted that students who have never played video games or expressed strong dislike for them were instructed to skip certain questions, which likely explains the presence of nonrespondents for some of the attitude questions. Consequently, there may be a higher number of non-responses in questions related to other aspects of video games (like whether they are educational or where they play). The analysis of those specific questions would primarily reflect the views of students who already have a positive opinion of video games.
+
+Overall, students generally enjoy playing video games, with relaxation being the most common reason for liking them and time commitment being the most common reason for disliking them.
+
 # 3. Advanced Analysis
 
 # 4. Discussion
