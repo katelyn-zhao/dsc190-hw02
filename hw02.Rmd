@@ -15,6 +15,14 @@ video_multiple <- read.table("videoMultiple.txt", header = TRUE, sep="")
 
 # 1. Introduction
 
+This report analyzes a survey conducted among 3000 - 4000 students enrolled in statistics courses at UC Berkeley during the Fall 1994 semester. The survey aimed to investigate students' video game habits, preferences, and attitudes towards gaming. A total of 314 students from Statistics 2, Section 1 were eligible for the survey based on their participation in the second exam of the semester, with 95 students randomly selected to participate. Out of the selected group, 91 students submitted complete responses, with incomplete responses encoded as 99.
+
+The survey covered questions including the number of hours spent playing video games, where and how often students play, their preferences for different types of games, etc. The second part of the survey covered students' attitudes toward video games, whether they liked playing games or not and why.
+
+The primary goal of this analysis is to investigate students' video game behaviors and preferences, as well as potential correlations between these behaviors and demographic factors such as gender, work, and computer ownership. Specifically, we aim to investigate the proportion of students playing video games during the week prior to the survey, the relation between reported time spend playing video games, the frequency of playing, and timing of the survey, the main reasons students like or dislike playing video games, and any noticeable differences in video game preferences and habits based on demographics. We found that **insert results of analysis here**
+
+The report is structured as follows: Section 1 addresses each of the research questions outlined above, Section 2 analyzes the survey data, including numerical and graphical comparisons of video game habits and preferences. Section 3 expands on the analysis to explore potential differences across subgroups. Section 4 summarizes the findings and discusses their implications, and Section 5 provides additional information and appendices related to the analysis.
+
 # 2. Analysis
 
 ## 2.1. Estimate Proportions
