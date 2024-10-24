@@ -34,7 +34,7 @@ The point estimate represents a single estimated value of the proportion of stud
    
    The formula for the sample proportion is given by:
    \[
-   \hat{X} = \frac{k}{n}
+   \bar{X} = \frac{k}{n}
    \]
    where \( k \) is the number of students who played video games, and \( n \) is the total number of students surveyed.
 
@@ -42,7 +42,7 @@ The interval estimate provides a range that is likely to contain the true propor
 
    The confidence interval is calculated as:
    \[
-   (\hat{X} - 2 \frac{\sigma}{\sqrt{n}}, \hat{X} + 2 \frac{\sigma}{\sqrt{n}})
+   (\bar{X} - 2 \frac{\sigma}{\sqrt{n}}, \bar{X} + 2 \frac{\sigma}{\sqrt{n}})
    \]
    where \(\frac{\sigma}{\sqrt{n}} \) is the standard error.
 
