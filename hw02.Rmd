@@ -458,6 +458,93 @@ who like to play video games and those who do not:
 
 This suggests that gender and work status may not be related to students' preferenced for video games, while computer ownership appears closely related. Male students, those who do not work, and students who own computers are more likely to enjoy playing video games compared to their counterparts. However, in the population of those who are more likely to dislike playing video games, male students, those who do work, and those who own a laptop take precedent.
 
+## 2.6 Grade Distributions
+
+### 2.6.1 Methods
+
+To analyze students' grade expectations in the course, we will: 1. Calculate the observed distribution of students' expected grades by determining the proportions of students expecting each grade with the letter assignments: 4 = A, 3 = B, 2 = C, 1 = D, 0 = F, 2. Compare the observed distribution with the course's intended grade distribution (20% A's, 30% B's, 40% C's, and 10% D's or lower), 3. Simulate the effect of nonrespondents as potential failing students to evaluate if this assumption could significantly alter the observed distribution. Non-respondents could represent students who may expect to receive failing grades and, therefore, chose not to participate in the survey or attend discussion sections.
+
+### 2.6.2 Analysis
+
+The observed grade distribution from the survey data shows the following proportions:
+```{r, echo=FALSE}
+# Load necessary libraries
+library(knitr)
+library(kableExtra)
+
+# Create the data frame for observed proportions and target distribution
+proportions_data <- data.frame(
+  Grade = c("A", "B", "C", "D/F"),
+  "Observed" = c(0.34065934, 0.57142857, 0.08791209, NA),
+  "With Nonrespondents" = c(0.32631579, 0.54736842, 0.08421053, 0.04210526),
+  "Target" = c(0.20, 0.30, 0.40, 0.10)
+)
+
+# Use kable to create the table with styling
+kable(proportions_data, caption = "Comparison of Observed and Target Grade Proportions") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+
+```
+
+By including the 4 non-respondents in the D/F category, we recalculated the proportions to evaluate how it would change the observed distribution's alignment with the target distribution. The bar plots below compares these observed proportions with the target distribution set by the course. Deviations from the target distribution suggests discrepancies between students' expectations and the course's grading goals.
+
+```{r, echo=FALSE,}
+par(mfrow = c(1, 2), mar = c(5, 4, 4, 2) + 0.1, cex = 0.8)
+
+# Bar Graphs
+  grades <- c("A", "B", "C", "D/F")
+  target_proportion <- c(0.2, 0.3, 0.4, 0.1)
+  observed_proportion <- c(0.34065934, 0.57142857, 0.08791209, 0.0)
+  observed_proportion_with_nonrespondents <- c(0.32631579, 0.54736842, 0.08421053, 0.04210526)
+  
+  proportions_with_nonrespondents <- rbind(target_proportion, observed_proportion_with_nonrespondents)
+  proportions <- rbind(target_proportion, observed_proportion)
+  colors <- c(rgb(1,0,0,0.25), rgb(0,0,1,0.25))
+  
+  bar_positions <- barplot(proportions,
+          beside = TRUE,
+          names.arg = grades,
+          col = colors,
+          ylim = c(0, 1),
+          main = "Observed Grade Distribution",
+          ylab = "Proportion", xlab = "Grade",
+          legend.text = c("Target Proportion", "Observed Proportion"))
+  
+  y_ticks <- seq(0, 1, by = 0.1)
+  for (y in y_ticks) {
+    segments(x0 = min(bar_positions) - 0.9, x1 = max(bar_positions) + 0.5, 
+             y0 = y, y1 = y, col = "gray", lty = "dotted")
+  }
+  
+  bar_positions <- barplot(proportions_with_nonrespondents,
+          beside = TRUE,
+          names.arg = grades,
+          col = colors,
+          ylim = c(0, 1),
+          main = "With Nonrespondents",
+          ylab = "Proportion", xlab = "Grade",
+          legend.text = c("Target Proportion", "Observed Proportion"))
+  
+  y_ticks <- seq(0, 1, by = 0.1)
+  for (y in y_ticks) {
+    segments(x0 = min(bar_positions) - 0.9, x1 = max(bar_positions) + 0.5, 
+             y0 = y, y1 = y, col = "gray", lty = "dotted")
+  }
+par(mfrow = c(1, 1), cex = 1)
+```
+
+Comparing the observed grade distribution with the target, the observed proportion of students expecting A’s is 34.1%, which exceeds the target of 20%. The observed proportion for B's is 57.1% which is much higher than the target 30%. Only 8.7% of students expect a C, which is substantially lower than the target of 40%. There were no respondents categorized as D/F students in the initial observation, compared to the target of 10%.
+
+When non-respondents are included as D/F students (assuming these students are no longer attending and likely failing), the proportion of students expecting A’s and B’s drops slightly to 32.6% and 54.7%, respectively. These values still exceed the course's target of 20% for A's and 30% for B's, though the gap narrows. The proportion of students expecting C’s changes only slightly to 8.4%, which remains far below the 40% target. The D/F category now shows 4.2% of students, compared to the 10% target. Even with the non-respondents accounted for, the proportion of failing students remains lower than expected.
+
+### 2.6.3 Conclusion
+
+The observed grade distribution indicates that a larger proportion of students are expecting higher grades (A's and B's) than the target distribution set by the course. There is a significant deficit in the proportion of C’s, which suggests that students are either expecting to over perform relative to expectations, lenient grading policies, or simple course material.
+
+The inclusion of non-respondents, under the assumption that they are failing students, slightly adjusts the distribution toward the course's targets. However, it still does not bring the observed distribution in alignment with the target proportions. Even with this adjustment, there are fewer failing students than expected, and higher grades are over-represented.
+
+This discrepancy suggests that students’ expected performance diverge from the course's grading goals. Course content, grading policies, or other factors (such as grade inflation or differing levels of student effort) could potentially cause this misalignment.
+
 # 3. Advanced Analysis
 
 ## 3.1 Methods
