@@ -290,6 +290,180 @@ It is noted that students who have never played video games or expressed strong 
 
 Overall, students generally enjoy playing video games, with relaxation being the most common reason for liking them and time commitment being the most common reason for disliking them.
 
+## 2.5 Differences Between Students Who Like and Dislike Video Games
+
+### 2.5.1 Methods
+
+We will examine the differences between students who enjoy playing video
+games versus those who don't. We use survey data to examine differences
+based on three demographic variables:
+
+1.  Gender (Male vs. Female)
+2.  Work Status (Students who work for pay vs. those who don’t)
+3.  Computer Ownership (Students who own a computer vs. those who don’t)
+
+To simplify these comparisons, we will collapse the responses to video
+game preference into two main categories:
+
+-   Enjoys Video Games: This includes students who selected "2" (very
+    much) and "3" (somewhat).
+-   Dislikes Video Games: This includes students who selected "4" (not
+    really) and "5" (not at all).
+
+The students who selected "1" (never played) will not be included in
+this analysis. We will compute proportions for each demographic group
+(e.g. male/female, working/not working, owning a computer/not owning a
+computer) to observe differences in video game preferences. Graphical
+displays (i.e. bar plots and cross-tabulations) will be used to
+visualize the differences between the subgroups to help us understand
+whether demographic factors like gender, work status, or computer
+ownership are associated with a preference for video games.
+
+### 2.5.2 Analysis
+
+First, we categorized students based on whether they like to play video
+games or not:
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+numerical_summaries <- data.frame(
+  Frequency = c(69,20), Proportion = c("77.5%", "22.5%")
+)
+
+rownames(numerical_summaries) <- c("Likes to Play Video Games", "Does not like to Play Video Games")
+
+kable(numerical_summaries, caption = "Sample Frequency of Video Game Preference") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+```
+
+We compute the proportions of students in each category who enjoy or
+dislike video games and visualized the results using bar plots:
+
+```{r, echo=FALSE}
+
+video_data$likes_games <- ifelse(video_data$like == 2, 3 | video_data$like == 4, 5)
+
+gender_table <- table(video_data$likes_games, video_data$sex)
+colnames(gender_table) <- c("Female", "Male")
+
+# Work comparison
+work_table <- table(video_data$likes_games, video_data$work > 0)
+colnames(work_table) <- c("Doesn't Work", "Works")
+
+# Computer ownership comparison
+pc_table <- table(video_data$likes_games, video_data$own)
+colnames(pc_table) <- c("No PC", "Owns PC")
+
+
+# Gender comparison visualization
+barplot(gender_table, beside = TRUE, col = c("red", "blue"),
+        main = "Video Game Preferences by Gender",
+        xlab = "Gender", ylab = "Number of Students",
+        legend = c("Doesn't Like", "Likes to Play"))
+
+# Work comparison visualization
+barplot(work_table, beside = TRUE, col = c("red", "blue"),
+        main = "Video Game Preferences by Work Status",
+        xlab = "Work Status", ylab = "Number of Students",
+        legend = c("Doesn't Like", "Likes to Play"))
+
+# Computer ownership comparison visualization
+barplot(pc_table, beside = TRUE, col = c("red", "blue"),
+        main = "Video Game Preferences by Computer Ownership",
+        xlab = "Computer Ownership", ylab = "Number of Students",
+        legend = c("Doesn't Like", "Likes to Play"))
+
+```
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+numerical_summaries <- data.frame(
+  Female = c("0.363", "0.055", "0.418"), Male = c("0.385", "0.198", "0.582"), Total = c("0.747","0.253", "1.000")
+)
+
+rownames(numerical_summaries) <- c("Likes to Play Video Games", "Does not like to Play Video Games", "Total")
+
+kable(numerical_summaries, caption = "Video Game Preferences by Gender") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+```
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+numerical_summaries <- data.frame(
+  Works = c("0.362", "0.154", "0.516"), "Doesn't Work" = c("0.385", "0.099", "0.484"), Total = c("0.747","0.253", "1.000")
+)
+
+rownames(numerical_summaries) <- c("Likes to Play Video Games", "Does not like to Play Video Games", "Total")
+
+kable(numerical_summaries, caption = "Video Game Preferences by Work Status") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+```
+
+```{r, echo=FALSE}
+library(knitr)
+library(kableExtra)
+
+numerical_summaries <- data.frame(
+  Owns = c("0.538", "0.198", "0.736"), "Doesn't Own" = c("0.209", "0.055", "0.264"), Total = c("0.747","0.253", "1.000")
+)
+
+rownames(numerical_summaries) <- c("Likes to Play Video Games", "Does not like to Play Video Games", "Total")
+
+kable(numerical_summaries, caption = "Video Game Preferences by Computer Ownership") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), full_width = FALSE)
+```
+
+From the cross-tabulation and bar chart, we observe that male students
+are more likely to enjoy playing video games compared to female
+students. A larger proportion of male students report liking video games
+than female students. Students who work for pay tend to have a slightly
+lower preference for video games compared to those who don’t work.
+Students who own a computer are more likely to enjoy playing video games
+than those who don’t.
+
+### 2.5.3 Conclusions
+
+Our analysis reveals notable demographic differences between students
+who like to play video games and those who do not:
+
+1.  **Gender**: There is a no notable gender difference for students who
+    like to play video games, with both male and female students being
+    likely to enjoy video games. This suggests that video games may
+    appeal equally to both genders. However, a greater proportion of
+    males reported disliking video games, potentially due to the types
+    of games commonly played by males.
+
+2.  **Work Status**: Similarly to gender, work status does not seem to
+    have a significant effect on whether a student likes to play video
+    games. Students who work for pay are relatively as likely to enjoy
+    video games as those who do not work. However, there is a slightly
+    greater proportion of students who work for pay and dislike video
+    games; this could be due to the time constraints faced by working
+    students, who may have less leisure time.
+
+3.  **Computer Ownership**: Computer ownership appears to have a major
+    influence on whether a student likes to play video games or not.
+    Owning a computer appears to be associated with a higher likelihood
+    of enjoying video games. This is intuitive, as access to technology
+    likely facilitates more frequent gaming, and in the reverse case,
+    liking gaming may encourage the purchase for a computer. Out of the
+    students who dislike gaming, there is, however, a larger proportion
+    who own a computer.
+
+This suggests that gender and work status may not be
+related to students' preferenced for video games, while computer
+ownership appears closely related. Male students, those who do not work,
+and students who own computers are more likely to enjoy playing video
+games compared to their counterparts. However, in the population of
+those who are more likely to dislike playing video games, male students,
+those who do work, and those who own a laptop take precedent.
+
 # 3. Advanced Analysis
 
 ## 3.1 Methods
