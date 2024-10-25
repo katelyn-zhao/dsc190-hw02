@@ -341,7 +341,7 @@ kable(numerical_summaries, caption = "Sample Frequency of Video Game Preference"
 We compute the proportions of students in each category who enjoy or
 dislike video games and visualized the results using bar plots:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.width=7, fig.height=4}
 
 video_data$likes_games <- ifelse(video_data$like == 2, 3 | video_data$like == 4, 5)
 
@@ -456,13 +456,7 @@ who like to play video games and those who do not:
     students who dislike gaming, there is, however, a larger proportion
     who own a computer.
 
-This suggests that gender and work status may not be
-related to students' preferenced for video games, while computer
-ownership appears closely related. Male students, those who do not work,
-and students who own computers are more likely to enjoy playing video
-games compared to their counterparts. However, in the population of
-those who are more likely to dislike playing video games, male students,
-those who do work, and those who own a laptop take precedent.
+This suggests that gender and work status may not be related to students' preferenced for video games, while computer ownership appears closely related. Male students, those who do not work, and students who own computers are more likely to enjoy playing video games compared to their counterparts. However, in the population of those who are more likely to dislike playing video games, male students, those who do work, and those who own a laptop take precedent.
 
 # 3. Advanced Analysis
 
