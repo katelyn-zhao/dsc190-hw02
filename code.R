@@ -128,6 +128,41 @@ barplot(reasons_disliking,
 
 #Question 5
 
+# Assignment to two groups
+video_data$likes_games <- ifelse(video_data$like == 2, 3 | video_data$like == 4, 5)
+likes_videogames <- video_data[video_data$like == 2 | video_data$like == 3,]
+dislikes_videogames <- video_data[video_data$like == 4 | video_data$like == 5,]
+
+# Gender comparison
+gender_table <- table(video_data$likes_games, video_data$sex)
+colnames(gender_table) <- c("Female", "Male")
+
+# Work comparison
+work_table <- table(video_data$likes_games, video_data$work > 0)
+colnames(work_table) <- c("Doesn't Work", "Works")
+
+# Computer ownership comparison
+pc_table <- table(video_data$likes_games, video_data$own)
+colnames(pc_table) <- c("No PC", "Owns PC")
+
+# Gender comparison visualization
+barplot(gender_table, beside = TRUE, col = c("red", "blue"),
+        main = "Video Game Preferences by Gender",
+        xlab = "Gender", ylab = "Number of Students",
+        legend = c("Doesn't Like", "Likes to Play"))
+
+# Work comparison visualization
+barplot(work_table, beside = TRUE, col = c("red", "blue"),
+        main = "Video Game Preferences by Work Status",
+        xlab = "Work Status", ylab = "Number of Students",
+        legend = c("Doesn't Like", "Likes to Play"))
+
+# Computer ownership comparison visualization
+barplot(pc_table, beside = TRUE, col = c("red", "blue"),
+        main = "Video Game Preferences by Computer Ownership",
+        xlab = "Computer Ownership", ylab = "Number of Students",
+        legend = c("Doesn't Like", "Likes to Play"))
+
 #Question 6
 
 #Advanced Analysis
