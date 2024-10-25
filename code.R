@@ -163,7 +163,96 @@ barplot(pc_table, beside = TRUE, col = c("red", "blue"),
         xlab = "Computer Ownership", ylab = "Number of Students",
         legend = c("Doesn't Like", "Likes to Play"))
 
-#Question 6
+# Question 6 --------------------------------------------------------------
+
+# Target distribution for comparison
+target_distribution <- c("A" = 0.2, "B" = 0.3, "C" = 0.4, "D or F" = 0.1)
+
+# Combine D and F into "D or F" to match the target distribution
+video_data$grade_collapsed <- ifelse(video_data$grade == 1 | video_data$grade == 0, "D or F", 
+                                     ifelse(video_data$grade == 2, "C", 
+                                            ifelse(video_data$grade == 3, "B", "A")))
+
+# Recalculate observed proportions with D and F combined
+observed_grades_collapsed <- table(video_data$grade_collapsed)
+observed_proportion_collapsed <- prop.table(observed_grades_collapsed)
+
+# Target grade distribution
+target_distribution <- data.frame(
+  Grade = c("A", "B", "C", "D/F"),
+  Target_Proportion = c(0.20, 0.30, 0.40, 0.10)
+)
+
+# Calculate observed grade distribution from the data
+grade_counts <- table(video_data$grade)
+grade_proportions <- prop.table(grade_counts)
+
+# Convert to a data frame for plotting
+observed_distribution <- data.frame(
+  Grade = c("A", "B", "C", "D/F"),
+  Observed_Proportion = c(grade_proportions["4"], grade_proportions["3"], 
+                          grade_proportions["2"], sum(grade_proportions["1"], grade_proportions["0"]))
+)
+
+# Merge target and observed distributions
+grade_comparison <- merge(target_distribution, observed_distribution, by = "Grade")
+
+
+
+#Comparing results including non respondents
+grade_counts_with_nonrespondents <- c(4, 8, 52, 31) 
+names(grade_counts_with_nonrespondents) <- c(1, 2, 3, 4)
+grade_table_with_nonrespondents <- as.table(grade_counts_with_nonrespondents)
+grade_proportions_with_nonrespondents <- prop.table(grade_counts_with_nonrespondents)
+
+observed_distribution_with_nonrespondents <- data.frame(
+  Grade = c("A", "B", "C", "D/F"),
+  Observed_Proportion_With_Nonrespondents = c(grade_proportions_with_nonrespondents["4"], grade_proportions_with_nonrespondents["3"], 
+                          grade_proportions_with_nonrespondents["2"], grade_proportions_with_nonrespondents["1"])
+)
+  
+  grade_comparison_with_nonrespondents <- merge(target_distribution, observed_distribution_with_nonrespondents, by = "Grade")
+  
+  # Bar Graphs
+  grades <- c("A", "B", "C", "D/F")
+  target_proportion <- c(0.2, 0.3, 0.4, 0.1)
+  observed_proportion <- c(0.34065934, 0.57142857, 0.08791209, 0.0)
+  observed_proportion_with_nonrespondents <- c(0.32631579, 0.54736842, 0.08421053, 0.04210526)
+  
+  proportions_with_nonrespondents <- rbind(target_proportion, observed_proportion_with_nonrespondents)
+  proportions <- rbind(target_proportion, observed_proportion)
+  colors <- c(rgb(1,0,0,0.25), rgb(0,0,1,0.25))
+  
+  bar_positions <- barplot(proportions,
+          beside = TRUE,
+          names.arg = grades,
+          col = colors,
+          ylim = c(0, 1),
+          main = "Comparison of Target and Observed Grade Distributions",
+          ylab = "Proportion", xlab = "Grade",
+          legend.text = c("Target Proportion", "Observed Proportion"))
+  
+  y_ticks <- seq(0, 1, by = 0.1)
+  for (y in y_ticks) {
+    segments(x0 = min(bar_positions) - 0.9, x1 = max(bar_positions) + 0.5, 
+             y0 = y, y1 = y, col = "gray", lty = "dotted")
+  }
+  
+  bar_positions <- barplot(proportions_with_nonrespondents,
+          beside = TRUE,
+          names.arg = grades,
+          col = colors,
+          ylim = c(0, 1),
+          main = "Grade Distributions With Nonrespondents",
+          ylab = "Proportion", xlab = "Grade",
+          legend.text = c("Target Proportion", "Observed Proportion"))
+  
+  y_ticks <- seq(0, 1, by = 0.1)
+  for (y in y_ticks) {
+    segments(x0 = min(bar_positions) - 0.9, x1 = max(bar_positions) + 0.5, 
+             y0 = y, y1 = y, col = "gray", lty = "dotted")
+  }
+  
 
 #Advanced Analysis
 
