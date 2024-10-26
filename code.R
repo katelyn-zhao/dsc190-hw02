@@ -2,7 +2,8 @@
 video_data <- read.table("videodata.txt", header = TRUE, sep="")
 video_multiple <- read.table("videoMultiple.txt", header = TRUE, sep="")
 
-#Question 1
+## Question 1 --------------------------------------------------------------
+
 #Point Estimate Calculation
 point_estimate_fraction <- nrow(video_data[video_data$time > 0,]) / nrow(video_data) #0.3736264
 
@@ -12,7 +13,8 @@ estimate_error <- sqrt(point_estimate_fraction * (1- point_estimate_fraction)) /
 lower_interval_estimate_fraction <- point_estimate_fraction - (2 * estimate_error) #0.2722014
 upper_interval_estimate_fraction <- point_estimate_fraction + (2 * estimate_error) #0.4750513
 
-#Question 2
+# Question 2 --------------------------------------------------------------
+
 daily_gamers <- video_data[video_data$freq == 1,]
 weekly_gamers <- video_data[video_data$freq == 2,]
 monthly_gamers <- video_data[video_data$freq == 3,]
@@ -40,7 +42,7 @@ hist(semesterly_gamers$time,
      xlab = "Hours Played",
      breaks=20)
 
-#Ouestion 3
+# Question 3 --------------------------------------------------------------
 
 #Look at the shape of the data
 hist(video_data$time,
@@ -70,7 +72,7 @@ abline(v = point_estimate_average, col = 'red', lty = 2, lwd = 2)
 abline(v = lower_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 abline(v = upper_interval_estimate_average, col = "blue", lty = 2, lwd = 2)
 
-#Question 4
+# Question 4 --------------------------------------------------------------
 
 # Distribution of preferences for video games
 table(video_data$like)
@@ -89,12 +91,11 @@ filtered_video_data <- video_data[video_data$like != 99, ]
 
 # Plot histogram of video game preferences
 hist(filtered_video_data$like, 
-     breaks = 5,  # Adjust number of bins based on categories
-     col = "blue", 
+     breaks = 5,
      main = "Distribution of Video Game Preferences", 
      xlab = "Preference (1 = Never Played, 2-3 = Enjoys, 4-5 = Dislikes)",
      ylab = "Frequency",
-     xaxt = "n")  # Remove the default x-axis labels
+     xaxt = "n")
 axis(1, at = 1:5, labels = c("Never Played", "Enjoy (2)", "Enjoy (3)", "Dislike (4)", "Dislike (5)"))
 
 # Reasons for liking video games 
@@ -113,7 +114,6 @@ reasons_for_likeliness <- list(
 # Barplot for reasons for liking video games
 barplot(reasons_liking, 
         main = "Reasons for Liking Video Games", 
-        col = "green", 
         xlab = "Reason", 
         ylab = "Count", 
         las = 2) 
@@ -121,12 +121,11 @@ barplot(reasons_liking,
 # Barplot for reasons for disliking video games
 barplot(reasons_disliking, 
         main = "Reasons for Disliking Video Games", 
-        col = "red", 
         xlab = "Reason", 
         ylab = "Count", 
         las = 2)
 
-#Question 5
+# Question 5 --------------------------------------------------------------
 
 # Assignment to two groups
 video_data$likes_games <- ifelse(video_data$like == 2, 3 | video_data$like == 4, 5)
@@ -163,6 +162,7 @@ barplot(pc_table, beside = TRUE, col = c("red", "blue"),
         xlab = "Computer Ownership", ylab = "Number of Students",
         legend = c("Doesn't Like", "Likes to Play"))
 
+
 # Question 6 --------------------------------------------------------------
 
 # Target distribution for comparison
@@ -197,8 +197,6 @@ observed_distribution <- data.frame(
 # Merge target and observed distributions
 grade_comparison <- merge(target_distribution, observed_distribution, by = "Grade")
 
-
-
 #Comparing results including non respondents
 grade_counts_with_nonrespondents <- c(4, 8, 52, 31) 
 names(grade_counts_with_nonrespondents) <- c(1, 2, 3, 4)
@@ -210,7 +208,6 @@ observed_distribution_with_nonrespondents <- data.frame(
   Observed_Proportion_With_Nonrespondents = c(grade_proportions_with_nonrespondents["4"], grade_proportions_with_nonrespondents["3"], 
                           grade_proportions_with_nonrespondents["2"], grade_proportions_with_nonrespondents["1"])
 )
-  
   grade_comparison_with_nonrespondents <- merge(target_distribution, observed_distribution_with_nonrespondents, by = "Grade")
   
   # Bar Graphs
@@ -253,8 +250,8 @@ observed_distribution_with_nonrespondents <- data.frame(
              y0 = y, y1 = y, col = "gray", lty = "dotted")
   }
   
-
-#Advanced Analysis
+  
+# Advanced Analysis -------------------------------------------------------
 
 #Hates math vs. Doesn't Hate Math Permutation Test
 hates_math <- video_data[video_data$math == 1,] #29
